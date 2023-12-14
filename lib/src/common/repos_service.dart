@@ -58,9 +58,19 @@ class RepositoriesService extends Service {
   ///
   /// API docs: https://developer.github.com/v3/repos/#list-organization-repositories
   Stream<Repository> listOrganizationRepositories(String org,
-      {String type = 'all'}) {
+      {String type = 'all',
+      String sort = 'created',
+      String direction = 'asc',
+      int perpage = 30,
+      int page = 1}) {
     ArgumentError.checkNotNull(org);
-    final params = <String, dynamic>{'type': type};
+    final params = <String, dynamic>{
+      'type': type,
+      'sort': sort,
+      'direction': direction,
+      'per_page': perpage,
+      'page': page,
+    };
 
     return PaginationHelper(github).objects<Map<String, dynamic>, Repository>(
       'GET',
